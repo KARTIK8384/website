@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kartik Thakare · Portfolio</title>
+  <meta name="description" content="Portfolio of Kartik Kailas Thakare — Digital systems design, embedded systems, and RTL/EDA workflows." />
+  <style>
+    /* ============ THEME ============ */
+    :root{
+      --bg: #f8f9fb;
+      --bg-2: #ffffff;
+      --text: #0b0b0c;
+      --muted: #6b7280; /* zinc-500 */
+      --border: #e5e7eb; /* zinc-200 */
+      --card: #ffffff;
+      --shadow: 0 1px 2px rgba(0,0,0,.06), 0 4px 24px rgba(0,0,0,.05);
+      --accent: #4f46e5; /* indigo-600 */
+      --accent-2: #4338ca; /* indigo-700 */
+      --chip-bg: #eef2ff; /* indigo-50 */
+      --chip-text: #3730a3; /* indigo-800 */
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg: #0b0b0c;
+        --bg-2: #0e0f12;
+        --text: #f5f5f6;
+        --muted: #9ca3af; /* zinc-400 */
+        --border: #2a2e37; /* zinc-800 */
+        --card: #121317;
+        --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 32px rgba(0,0,0,.35);
+        --accent: #6366f1;
+        --accent-2: #818cf8;
+        --chip-bg: rgba(99,102,241,.15);
+        --chip-text: #c7d2fe;
+      }
+    }
+
+    html{scroll-behavior:smooth}
+    :target{scroll-margin-top: 88px}
+    body{margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif; color:var(--text); background: linear-gradient(180deg,var(--bg),var(--bg-2));}
+    .container{max-width:1100px;margin-inline:auto;padding-inline:1rem}
+
+    /* ============ HEADER ============ */
+    .site-header{position:sticky;top:0;z-index:1000; backdrop-filter:saturate(180%) blur(12px); background:color-mix(in srgb, var(--bg-2) 70%, transparent); border-bottom:1px solid var(--border)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{display:flex;align-items:center;gap:.5rem;font-weight:600}
+    .brand svg{width:18px;height:18px}
+    .nav-links{display:none;gap:1rem;font-size:.95rem}
+    .nav-links a{color:var(--text);text-decoration:none;opacity:.9}
+    .nav-links a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+    .social{display:flex;gap:.25rem}
+    .icon-btn{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:transparent}
+    .icon-btn:hover{background:color-mix(in srgb, var(--accent) 12%, transparent);border-color:color-mix(in srgb, var(--accent) 40%, var(--border))}
+    .icon{width:18px;height:18px;stroke:currentColor}
+
+    .hamburger{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:transparent}
+    .hamburger svg{width:20px;height:20px}
+    .mobile-panel{display:none; padding: .75rem 0 1rem; border-bottom:1px solid var(--border)}
+    .mobile-panel a{display:block;padding:.5rem 0;text-decoration:none;color:var(--text)}
+
+    /* ============ HERO ============ */
+    .hero{padding-block:3rem}
+    .hero-grid{display:grid;gap:1.25rem;align-items:center}
+    .hero h1{font-size:clamp(1.75rem, 3vw + 1rem, 3rem);line-height:1.1;margin:0 0 .5rem}
+    .tagline{color:var(--muted);font-size:1.05rem}
+    .contact-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.75rem;font-size:.95rem}
+    .contact-row a,.contact-row span{display:inline-flex;align-items:center;gap:.4rem;color:var(--text);text-decoration:none}
+    .cta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+    .btn{appearance:none;border:1px solid var(--border);background:var(--bg-2);color:var(--text);padding:.65rem .9rem;border-radius:12px;font-weight:600}
+    .btn-primary{background:var(--accent);border-color:var(--accent);color:white}
+    .btn-primary:hover{background:var(--accent-2)}
+    .btn-outline{background:transparent;border-color:color-mix(in srgb, var(--accent) 35%, var(--border));color:var(--accent)}
+
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px; box-shadow:var(--shadow)}
+    .card-body{padding:1rem}
+    .card-head{display:flex;gap:.9rem;align-items:center;padding:1rem;border-bottom:1px solid var(--border)}
+    .avatar{inline-size:56px;block-size:56px;border-radius:999px;border:1px solid var(--border);display:grid;place-items:center;font-weight:700}
+    .eyebrow{font-size:.75rem;color:var(--muted)}
+
+    /* ============ SECTION ============ */
+    section{scroll-margin-top:96px}
+    .section-head{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
+    .section-head h2{font-size:1.25rem;margin:0}
+
+    /* ============ GRID CARDS ============ */
+    .grid-2{display:grid;gap:1rem}
+
+    .list{margin:.25rem 0 0;padding-left:1.1rem}
+    .list li{margin:.35rem 0}
+
+    .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+    .chip{background:var(--chip-bg);color:var(--chip-text);padding:.3rem .6rem;border-radius:999px;font-size:.8rem;border:1px solid color-mix(in srgb, var(--accent) 20%, transparent)}
+
+    /* ============ CONTACT ============ */
+    .contact-grid{display:grid;gap:.75rem;font-size:.95rem}
+    .contact-item{display:flex;align-items:center;gap:.5rem}
+
+    /* ============ FOOTER ============ */
+    footer{border-top:1px solid var(--border)}
+    .foot{display:flex;flex-direction:column;gap:.5rem;justify-content:space-between;align-items:flex-start;padding-block:1.25rem;color:var(--muted);font-size:.8rem}
+
+    /* ============ RESPONSIVE ============ */
+    @media (min-width: 768px){
+      .nav-links{display:flex}
+      .hamburger{display:none}
+      .hero{padding-block:4.5rem}
+      .hero-grid{grid-template-columns: 2fr 1fr;gap:2rem}
+      .grid-2{grid-template-columns: 1fr 1fr}
+      .foot{flex-direction:row;align-items:center}
+    }
+
+    /* Small, subtle animated circuit-y background lines */
+    .bg-circuit{
+      position:fixed;inset:0;z-index:-1;pointer-events:none;
+      background:
+        linear-gradient(90deg, color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px) 0 0 / 28px 28px,
+        linear-gradient(0deg,  color-mix(in srgb, var(--accent) 6%, transparent) 1px, transparent 1px) 0 0 / 28px 28px;
+      mask: radial-gradient(1200px 1200px at 80% -10%, black 60%, transparent 75%);
+      animation: drift 30s linear infinite;
+      opacity:.25;
+    }
+    @keyframes drift{to{background-position: 1400px 0, 0 1400px}}
+
+    /* Utility */
+    .sp-24{height:24px}
+  </style>
+</head>
+<body>
+  <div class="bg-circuit" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container nav">
+      <div class="brand">
+        <!-- cpu icon -->
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><rect x="9" y="9" width="6" height="6"/></svg>
+        <span>Kartik Thakare · Portfolio</span>
+      </div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#publications">Publications</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="social">
+        <a class="icon-btn" aria-label="LinkedIn" href="https://linkedin.com/in/kartik-thakare-871951219" target="_blank" rel="noreferrer">
+          <!-- LinkedIn -->
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.94 7.5a1.44 1.44 0 1 1 0-2.88 1.44 1.44 0 0 1 0 2.88z"/><path d="M5.5 9.75h2.9V19H5.5z"/><path d="M12.2 14.23v4.77h-2.9V9.75h2.78v1.25h.04c.39-.72 1.36-1.48 2.8-1.48 2.99 0 3.55 1.95 3.55 4.48V19h-2.9v-4.07c0-.97-.02-2.21-1.35-2.21-1.35 0-1.56 1.05-1.56 2.11z"/></svg>
+        </a>
+        <a class="icon-btn" aria-label="GitHub" href="https://github.com/kartik8384" target="_blank" rel="noreferrer">
+          <!-- GitHub -->
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.6-3.37-1.2-3.37-1.2-.45-1.13-1.1-1.43-1.1-1.43-.9-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .85-.27 2.8 1.02a9.73 9.73 0 0 1 5.1 0c1.95-1.29 2.8-1.02 2.8-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .26.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+        </a>
+        <button class="hamburger" id="menuBtn" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobileNav" class="container mobile-panel" hidden>
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-grid">
+        <div>
+          <h1>Kartik Kailas Thakare</h1>
+          <p class="tagline">Graduate Student in Electrical Engineering focused on digital systems design & embedded systems.</p>
+          <div class="contact-row">
+            <a href="mailto:kartikthakare05@gmail.com" aria-label="Email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m22 6-10 7L2 6"/></svg> kartikthakare05@gmail.com</a>
+            <span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 1h2a2 2 0 0 1 2 1.72c.12.9.32 1.77.59 2.6a2 2 0 0 1-.45 2.11L7 8a16 16 0 0 0 6 6l.57-.26a2 2 0 0 1 2.11.45 13.4 13.4 0 0 0 2.6.59A2 2 0 0 1 22 16.92z"/></svg> +1 (585) 210-7516</span>
+          </div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#contact"><!-- file icon -->
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:.4rem"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>Contact Me</a>
+            <!-- If you host a resume, change the href below from # to your URL -->
+            <a class="btn btn-outline" href="#" target="_blank" rel="noreferrer"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:.4rem"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>View Resume</a>
+          </div>
+        </div>
+        <aside class="card">
+          <div class="card-head">
+            <div class="avatar">KT</div>
+            <div>
+              <div style="font-weight:700">What I do</div>
+              <div class="eyebrow">Rochester, NY</div>
+            </div>
+          </div>
+          <div class="card-body" style="color:var(--muted)">
+            <p>Digital design (Verilog/SystemVerilog), embedded systems, and EDA-driven SoC workflows.</p>
+            <p>Comfortable across RTL, verification, and lab bring-up; blend software with hardware.</p>
+            <p>Interested in internship/co-op roles in ASIC/FPGA, verification, and embedded.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" aria-label="About">
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2h11A2.5 2.5 0 0 1 20 4.5v15"/><path d="M8 7h8M8 11h8M8 15h5"/><path d="M3 20h18"/></svg>
+        <h2>About</h2>
+      </div>
+      <article class="card">
+        <div class="card-body" style="font-size:1rem;color:var(--muted)">
+          I’m a graduate student at RIT with hands-on experience in lab operations, research documentation, and RTL/EDA flows. My recent projects span standard-cell library development, bus arbitration + DTMF in Verilog, and an ML-enabled sports analytics system using sensor streams.
+        </div>
+      </article>
+    </section>
+
+    <div class="sp-24"></div>
+
+    <!-- EDUCATION -->
+    <section id="education" aria-label="Education">
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 10-10-5-10 5 10 5 10-5Z"/><path d="M6 12v5c0 .9 4 2 6 2s6-1.1 6-2v-5"/></svg>
+        <h2>Education</h2>
+      </div>
+      <div class="grid-2">
+        <article class="card">
+          <div class="card-body">
+            <div style="font-weight:700">Rochester Institute of Technology</div>
+            <div class="eyebrow">M.S. in Electrical Engineering · Aug 2024 – Aug 2026</div>
+            <div class="chips">
+              <span class="chip">Design of Computer Systems</span>
+              <span class="chip">Complex Digital Systems Verification</span>
+              <span class="chip">Design of Digital Systems</span>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <div style="font-weight:700">University of Mumbai</div>
+            <div class="eyebrow">B.E. in Electronics Engineering · Aug 2019 – May 2023</div>
+            <div class="chips">
+              <span class="chip">Digital Logic Circuits</span>
+              <span class="chip">Basic VLSI Design</span>
+              <span class="chip">Embedded Systems &amp; RTOS</span>
+              <span class="chip">Machine Learning</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="sp-24"></div>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" aria-label="Experience">
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7h-5V5a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/><path d="M8 7h8"/></svg>
+        <h2>Experience</h2>
+      </div>
+      <div class="stack">
+        <article class="card" style="margin-bottom:1rem">
+          <div class="card-body">
+            <div style="font-weight:700">Graduate Research Assistant · <span style="font-weight:500">Rochester Institute of Technology — Rochester, NY</span></div>
+            <div class="eyebrow">Aug 2025 – Present</div>
+            <ul class="list">
+              <li>Prepared technical manuscripts and research reports in LaTeX, ensuring equation and content accuracy.</li>
+              <li>Assisted faculty with data, figures, and documentation for publications and instruction.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card" style="margin-bottom:1rem">
+          <div class="card-body">
+            <div style="font-weight:700">Laboratory Assistant · <span style="font-weight:500">Rochester Institute of Technology — Rochester, NY</span></div>
+            <div class="eyebrow">May 2025 – Present</div>
+            <ul class="list">
+              <li>Set up, test, and calibrate lab equipment; troubleshoot hardware/software issues to minimize downtime.</li>
+              <li>Maintained and organized laboratory spaces for operational readiness and smooth sessions.</li>
+              <li>Managed lab inventory and prepared course-specific kits to ensure timely student access to tools.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <div style="font-weight:700">Systems Engineer · <span style="font-weight:500">Tata Consultancy Services — Mumbai, India</span></div>
+            <div class="eyebrow">Oct 2023 – Jun 2024</div>
+            <ul class="list">
+              <li>Managed SAP Basis administration in Linux/Oracle environments for stability and performance.</li>
+              <li>Designed Java Web Dynpro applications; supported upgrades, transports, and migrations.</li>
+              <li>Collaborated with cross-functional teams to deliver scalable architectures with minimal downtime.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="sp-24"></div>
+
+    <!-- PROJECTS -->
+    <section id="projects" aria-label="Projects">
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21V7a2 2 0 0 0-2-2h-1"/><path d="M14 3H9a2 2 0 0 0-2 2v14"/><path d="M5 21h14"/></svg>
+        <h2>Projects</h2>
+      </div>
+      <div class="grid-2">
+        <article class="card">
+          <div class="card-body">
+            <div style="font-weight:700">Badminton Sport Analysis Using AI &amp; Sensors Data</div>
+            <div class="eyebrow">Apr 2023</div>
+            <ul class="list">
+              <li>Identified player movement via wearables with motion sensors.</li>
+              <li>Processing: RP2040 (Raspberry Pi Pico W) + IMU; firmware in MicroPython.</li>
+              <li>Random Forest ML; MQTT via Node-RED &amp; HiveMQ for real-time monitoring.</li>
+            </ul>
+            <div class="chips">
+              <span class="chip">RP2040</span><span class="chip">MPU6050</span><span class="chip">MicroPython</span><span class="chip">Python</span><span class="chip">TensorFlow</span><span class="chip">MQTT</span><span class="chip">Node-RED</span><span class="chip">HiveMQ</span>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <div style="font-weight:700">45nm CMOS Standard Cell Library &amp; Hierarchical Integration</div>
+            <div class="eyebrow">Sep 2024</div>
+            <ul class="list">
+              <li>Built library: inverters, logic gates, mux, D-FF, full adder using Cadence tools.</li>
+              <li>Ran DRC/LVS; pre-/post-layout sims; created 50-bit BSR &amp; 16-bit CSA.</li>
+              <li>Integrated test cell into Quarter Pad Frame with boundary-scan wiring.</li>
+            </ul>
+            <div class="chips">
+              <span class="chip">Cadence Virtuoso</span><span class="chip">ADE XL</span><span class="chip">Verilog</span><span class="chip">DRC/LVS</span><span class="chip">P&amp;R</span>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <div style="font-weight:700">Memory Access Bus Arbiter &amp; DTMF Receiver (Verilog)</div>
+            <div class="eyebrow">Dec 2024</div>
+            <ul class="list">
+              <li>ARB module for memory access between Tiny DSP core and DMA controller.</li>
+              <li>Integrated into DTMF receiver; RTL &amp; gate-level verification; timing/power analysis.</li>
+            </ul>
+            <div class="chips">
+              <span class="chip">Verilog</span><span class="chip">Cadence</span><span class="chip">Git</span><span class="chip">Assembly</span><span class="chip">RTL Verification</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="sp-24"></div>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" aria-label="Publications">
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2h11A2.5 2.5 0 0 1 20 4.5v15"/><path d="M8 7h8M8 11h8M8 15h5"/><path d="M3 20h18"/></svg>
+        <h2>Publications</h2>
+      </div>
+      <article class="card">
+        <div class="card-body">
+          <div style="font-weight:700">A System and Process for Identifying and Tracking Movements of a Badminton Player</div>
+          <div class="eyebrow">Indian Patent Journal 202321058914 A · Oct 2023</div>
+          <p class="eyebrow" style="margin:.5rem 0 1rem">Pawan Wankhede, Kartik Thakare, Bhumika Thombare, Navin Singhaniya</p>
+          <a href="https://iprsearch.ipindia.gov.in/PublicSearch/PublicationSearch/PatentDetails" target="_blank" rel="noreferrer" class="btn btn-outline">Patent Details</a>
+        </div>
+      </article>
+    </section>
+
+    <div class="sp-24"></div>
+
+    <!-- SKILLS -->
+    <section id="skills" aria-label="Skills">
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><rect x="9" y="9" width="6" height="6"/></svg>
+        <h2>Skills</h2>
+      </div>
+      <div class="grid-2">
+        <article class="card">
+          <div class="card-body">
+            <div style="font-weight:700;margin-bottom:.25rem">Languages</div>
+            <div class="chips">
+              <span class="chip">Verilog</span><span class="chip">SystemVerilog</span><span class="chip">Python</span><span class="chip">C</span><span class="chip">Java</span><span class="chip">SQL</span>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <div style="font-weight:700;margin-bottom:.25rem">Tools &amp; Platforms</div>
+            <div class="chips">
+              <span class="chip">Cadence Virtuoso</span><span class="chip">Quartus Prime</span><span class="chip">Xilinx Vivado</span><span class="chip">LTspice</span><span class="chip">KiCad</span><span class="chip">Linux</span><span class="chip">MATLAB</span><span class="chip">SAPGUI</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="sp-24"></div>
+
+    <!-- CONTACT -->
+    <section id="contact" aria-label="Contact">
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 1h2a2 2 0 0 1 2 1.72c.12.9.32 1.77.59 2.6a2 2 0 0 1-.45 2.11L7 8a16 16 0 0 0 6 6l.57-.26a2 2 0 0 1 2.11.45 13.4 13.4 0 0 0 2.6.59A2 2 0 0 1 22 16.92z"/></svg>
+        <h2>Contact</h2>
+      </div>
+      <article class="card">
+        <div class="card-body">
+          <div class="contact-grid">
+            <a class="contact-item" href="mailto:kartikthakare05@gmail.com"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m22 6-10 7L2 6"/></svg> kartikthakare05@gmail.com</a>
+            <div class="contact-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 1h2a2 2 0 0 1 2 1.72c.12.9.32 1.77.59 2.6a2 2 0 0 1-.45 2.11L7 8a16 16 0 0 0 6 6l.57-.26a2 2 0 0 1 2.11.45 13.4 13.4 0 0 0 2.6.59A2 2 0 0 1 22 16.92z"/></svg> +1 (585) 210-7516</div>
+            <a class="contact-item" href="https://linkedin.com/in/kartik-thakare-871951219" target="_blank" rel="noreferrer"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.94 7.5a1.44 1.44 0 1 1 0-2.88 1.44 1.44 0 0 1 0 2.88z"/><path d="M5.5 9.75h2.9V19H5.5z"/><path d="M12.2 14.23v4.77h-2.9V9.75h2.78v1.25h.04c.39-.72 1.36-1.48 2.8-1.48 2.99 0 3.55 1.95 3.55 4.48V19h-2.9v-4.07c0-.97-.02-2.21-1.35-2.21-1.35 0-1.56 1.05-1.56 2.11z"/></svg> LinkedIn</a>
+            <a class="contact-item" href="https://github.com/kartik8384" target="_blank" rel="noreferrer"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.6-3.37-1.2-3.37-1.2-.45-1.13-1.1-1.43-1.1-1.43-.9-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .85-.27 2.8 1.02a9.73 9.73 0 0 1 5.1 0c1.95-1.29 2.8-1.02 2.8-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .26.18.58.69.48A10 10 0 0 0 12 2Z"/></svg> GitHub</a>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <span>© <span id="year"></span> Kartik Kailas Thakare. All rights reserved.</span>
+      <span>Built with plain HTML/CSS · No framework</span>
+    </div>
+  </footer>
+
+  <!-- ============ JS (tiny) ============ -->
+  <script>
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const btn = document.getElementById('menuBtn');
+    const panel = document.getElementById('mobileNav');
+    btn?.addEventListener('click', () => {
+      const isHidden = panel.hasAttribute('hidden');
+      panel.toggleAttribute('hidden');
+      btn.setAttribute('aria-expanded', String(isHidden));
+    });
+  </script>
+</body>
+</html>
